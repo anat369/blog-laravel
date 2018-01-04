@@ -1,0 +1,40 @@
+Небольшой блог с админ-панелью, пользователям и подписчиками, база данных прилагается. Для входа в админ-панель необходимо пройти по адресу - название блога/admin, но предварительно нужно зайти под пользователем-администратором, иначе будет выходить страница 404.
+Данные администратора - admin@example.com, пароль - qwe123.
+
+Миниблог будет состоять из следующих сущностей, у каждой из которых будут свои свойства и методы:
+
+1. Категория (category):
+- свойства - id, title, slug
+- методы - post() - для связи с постом
+
+2. Тег (tag):
+- свойства - id, title, slug
+- методы - posts()
+
+3. Пользователь (user):
+- свойства - id, name, email, password, is_admin - админ или нет, status - забанен или нет, avatar, created_at, updated_at
+- методы - posts(), comments(), add(), edit(), remove(), uploadAvatar(), removeAvatar(), toggleAdmin() -переключатель админ или нет, toggleStatus() - переключатель забанен или нет
+
+4. Комментарий (comments):
+- свойства - id, text, user_id, post_id, status, created_at, updated_at
+- методы - posts(), author(), toggleStatus() - переключатель одобрен комментарий или нет
+
+5. Подписка (subscription):
+- свойства - id, email, token - подтверждение email адреса подписки, created_at, updated_at
+- методы - add() -добавить подписчика, remove() - удалить подписчика
+ 
+6. Пост (post):
+- свойства - id, title, slug (сео-ссылка), content, date, image, description, category_id,
+user_id (автор статьи), status (черновик или опубликованный пост), views (количество просмотров), is_featured (метка рекомендованное), created_at (время создания поста), updated_at (время изменения поста), post_tags (будем использовать для связи с тегами)
+- методы - add(), edit(), remove(), uploadImage(), removeImage(), getImage(), setCategory(), setTags(), toggleStatus() - переключить статус (черновик или опубликован), toggleFeatured() - переключить рекомендовать или нет, category() - связь с категориями, user() - связь с пользователями, comments() - свзяь с комментариями, tags() - связь с тегами
+
+Создадим следующие таблицы:
+posts
+categories
+tags
+post_tags - используется для связи тегов и постов
+users
+comments
+subscriptions
+
+Также будем использовать пакеты для создания сео-ссылок, для упрощения работы с формами и визуальный редактор в админ-панели - https://github.com/cviebrock/eloquent-sluggable , https://laravelcollective.com/ , https://ckeditor.com/
